@@ -1,0 +1,30 @@
+version: "3"
+services:
+  api:
+    container_name: api
+    restart: always
+    build: ./
+    ports:
+      - 3000:3000 # Ports mapping
+    volumes:
+      - ./:/home/src/app # Volumes mapping - Local -> container
+      - /usr/home/app/node_modules
+    environment:
+      - PORT=3000
+    depends_on:
+      - mongo
+  mongo:
+    container_name: mongo
+    restart: always
+    image: mongo:4.0
+    volumes:
+      - mongo-storage:/data/db # We add a volume to our container in order to store the database data
+    expose:
+      - 27017
+    ports:
+      - 27017:27017
+
+# Volumes definition:
+volumes:
+  mongo-storage:
+    driver: local

@@ -1,0 +1,20 @@
+{
+  "name": "ipssi-timer",
+  "version": "1.0.0",
+  "description": "A project management app that allow both teams and users to see time passed on a given project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Mor NDIAYE",
+  "repository": {
+      "type": "public",
+      "url": "https://github.com/Almorisson/ipssi-timer-api"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.16"
+  }
+}

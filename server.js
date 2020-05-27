@@ -19,7 +19,7 @@ const db = async () => {
 	}
 };
 
-// Execute DB connection
+// Execute DB connections
 db();
 
 app.listen(process.env.PORT, () => {

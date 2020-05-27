@@ -9,15 +9,15 @@ admin.initializeApp({
 
 
 // helper method to check validity of a sended token by our client
-exports.authCheck = (req, res, next = (f) => f) => {
+exports.authCheck = async (req) => {
     if(!req.headers.authtoken) throw new Error("Vous n'êtes pas autorisé à accéder à cette resource!")
 
     // check token validity
-    const valid = req.headers.authtoken === "secret" // Next will come from firebase
-
-	if (valid) {
-		next();
-	} else {
-		throw new Error("Vous n'êtes pas autorisé à accéder à cette resource!");
-	}
+   try {
+        const result = await admin.auth().verifyIdToken(req.headers.authtoken);
+        console.log("Result info", result);
+        return result;
+   } catch (error) {
+       throw new Error("Le token soumis est invalide ou a expiré.");
+   }
 };

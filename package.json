@@ -14,8 +14,12 @@
   },
   "license": "ISC",
   "dependencies": {
+    "apollo-server": "^2.13.1",
+    "apollo-server-express": "^2.13.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "graphql": "^15.0.0",
+    "merge-graphql-schemas": "^1.7.8",
     "mongoose": "^5.9.16"
   },
   "devDependencies": {

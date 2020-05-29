@@ -44,7 +44,7 @@ const db = async () => {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 			useCreateIndex: true,
-			useFindAndModify: true // To Suppress deprecated warning messages
+			useFindAndModify: false // To Suppress deprecated warning messages
 		});
 		console.log('DB connected');
 	} catch (error) {

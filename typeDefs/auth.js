@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server-express');
 
 module.exports = gql`
-    # scalar type
+    # scalar type to support correct DateTime formatting
     scalar DateTime
 
      # custom type an given Image
@@ -35,15 +35,16 @@ module.exports = gql`
     input UpdateUserInput {
         username: String
         name: String
+        email: String! # We will no able user to update this field
         images: [ImageInput]
         bio: String
     }
-    # built-in type
+    # query type to get get user infos
     type Query {
 		profile: User!  # Return a User
 	}
 
-    # custom mutation type for creating/updating a user
+    # mutation type for creating/updating a user
     type Mutation {
         createUser: CreateUserResponse!
         updateUser(input: UpdateUserInput): User!

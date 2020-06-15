@@ -8,7 +8,7 @@ const teamSchema = mongoose.Schema(
 			required: true
 		},
         description: {
-            type: Text
+            type: String
         },
 		users: {
 			type: Array,

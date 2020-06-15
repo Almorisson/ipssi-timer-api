@@ -2,36 +2,44 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema;
 
 const userSchema = new mongoose.Schema(
-    {
-        username: {
-            type: String,
-            required: true,
-            index: true,
-            unique: true
-        },
-        name: {
-            type: String
-        },
-        email: {
-            type: String,
-            required: true,
-            index: true,
-            unique: true
-        },
-        images: {
-            type: Array,
-            default: [
-                {
-                    url: 'https://via.placeholder.com/200x200.png?text=Profile',
-                    public_id: Date.now
-                }
-            ]
-        },
-        bio: {
-            type: String
-        }
-    },
-    { timestamps: true }
+	{
+		username: {
+			type: String,
+			required: true,
+			index: true,
+			unique: true
+		},
+		name: {
+			type: String
+		},
+		email: {
+			type: String,
+			required: true,
+			index: true,
+			unique: true
+		},
+		images: {
+			type: Array,
+			default: [
+				{
+					url: 'https://via.placeholder.com/200x200.png?text=Profile',
+					public_id: Date.now
+				}
+			]
+		},
+		bio: {
+			type: String
+		},
+		projects: {
+			type: Array,
+			default: []
+		},
+		team: {
+			type: ObjectId,
+			ref: 'Team'
+		}
+	},
+	{ timestamps: true }
 );
 
 module.exports = mongoose.model('User', userSchema);

@@ -83,7 +83,9 @@ const updateUser = async (_, args, { req }) => {
 		console.log(error.message);
 	}
 };
-
+/**
+ * Exports all queries and mutations
+ */
 module.exports = {
     DateTime: DateTimeResolver,
 	Query: {

@@ -7,14 +7,17 @@ const teamSchema = mongoose.Schema(
 			type: String,
 			required: true
 		},
-		createdBy: {
-			type: ObjectId,
-			ref: 'User'
-		},
+        description: {
+            type: Text
+        },
 		users: {
 			type: Array,
 			default: []
-		}
+		},
+		admin: {
+			type: ObjectId,
+			ref: 'User'
+		},
 	},
 	{ timestamps: true }
 );

@@ -25,8 +25,8 @@ module.exports = gql`
     input UpdateTeamInput {
         name: String
         description: String
-		#users: [User]
-		#admin: User! # We will no able user to update this field
+		users: [User]
+		admin: User! # User will no be able to update this field
     }
 
     # mutation type for creating/updating a team

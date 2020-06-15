@@ -13,7 +13,7 @@ const timerSchema = mongoose.Schema(
                 required: true
             },
             description: {
-                type: Text
+                type: String
             }
         }
 

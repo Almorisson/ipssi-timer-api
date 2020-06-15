@@ -15,15 +15,19 @@ const { DateTimeResolver } = require('graphql-scalars');
 const createTeam = async (_, args, { req }) => {
 	try {
 		const currentUser = await authCheck(req);
+
 		// validation
-		if (args.input.content.trim() === '') throw new Error('Les champs obligatoires sont requises!');
+		if (args.input.name.trim() === '')
+			throw new Error('Les champ nom est obligatoire pour créer un nouveau groupe!');
+		const team = await Team.findOne({ name: args.input.name }).exec();
 
 		if (currentUser) {
+			if (team) throw new Error('Ce nom de ce groupe existe dèjà, veuillez choisir un autre nom');
 			// Grad the right user from db
-			const userFromDb = await User.findOne({ email: currentUser.email });
+			const userFromDb = await User.findOne({ email: currentUser.email }).exec();
 			// create a new team
 			let newTeam = new Team({
-				name: args.input.name,
+				...args.input,
 				admin: userFromDb._id,
 				users: [ userFromDb ]
 			})
@@ -38,11 +42,36 @@ const createTeam = async (_, args, { req }) => {
 };
 
 /**
+ * Get all teams created by a given user(the admin of this team)
+ *
+ * @param {*} _
+ * @param {*} args
+ * @param {*} param2
+ */
+const teamsCreatedByAdmin = async (_, args, { req }) => {
+	try {
+		const currentUser = await authCheck(req);
+		if (currentUser) {
+			// Grad the right user from db
+			const userFromDb = await User.findOne({ email: currentUser.email }).exec();
+
+			return await Team.find({ admin: userFromDb })
+				.populate('admin', '_id username name')
+				.sort({ createdAt: -1 });
+		}
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+/**
  * Exports all queries and mutations
  */
 module.exports = {
 	DateTime: DateTimeResolver,
-	Query: {},
+	Query: {
+		teamsCreatedByAdmin
+	},
 
 	Mutation: {
 		createTeam

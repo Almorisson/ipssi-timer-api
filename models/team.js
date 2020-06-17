@@ -22,4 +22,4 @@ const teamSchema = mongoose.Schema(
 	{ timestamps: true }
 );
 
-module.exports = mongoose.model('Team', teamSchema);
+module.exports = mongoose.model('Project', teamSchema);

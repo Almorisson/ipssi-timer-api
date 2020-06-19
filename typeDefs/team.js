@@ -8,30 +8,46 @@ module.exports = gql`
 	type Team {
 		_id: ID!
 		name: String!
-        description: String
+		description: String
 		users: [User!]! # Need to rely it with user typeDef later
 		admin: User!
 		createdAt: DateTime
 		updatedAt: DateTime
 	}
 
-    # custom type to get team data
-    type CreateTeamResponse {
-        admin: User!
-        description: String
-        name: User!
-    }
-    # custom input type for updating team infos
-    input UpdateTeamInput {
-        name: String
-        description: String
-		#users: [User]
-		#admin: User! # We will no able user to update this field
-    }
+	# custom input type of type user
+	input UserInput {
+		email: String
+		username: String
+		name: String
+		bio: String
+	}
 
-    # mutation type for creating/updating a team
-    type Mutation {
-        createTeam: CreateTeamResponse!
-        updateTeam(input: UpdateTeamInput): Team! # Return a team
-    }
+	# custom type to get team data
+	input CreateTeamInput {
+		name: String!
+		description: String
+	}
+
+	# custom input type for updating team infos
+	input UpdateTeamInput {
+		_id: String!
+		name: String
+		description: String
+		users: [UserInput]
+	}
+
+	# mutation type for creating/updating/deleting a team
+	type Mutation {
+		createTeam(input: CreateTeamInput!): Team! # Return a team
+		updateTeam(input: UpdateTeamInput): Team! # Return a team
+		deleteTeam(teamId: String!): Team! # Return a team
+	}
+
+	# query type to retrieve given team(s)
+	type Query {
+		teamsCreatedByAdmin: [Team!]! # Return a collection of teams belongs to a user(admin of this one)
+		singleTeam(teamId: String!): Team! # Return a team
+	}
 `;
+    

@@ -8,7 +8,7 @@ module.exports = gql`
 	type Team {
 		_id: ID!
 		name: String!
-		description: String
+		description: String!
 		users: [User!]! # Need to rely it with user typeDef later
 		admin: User!
 		createdAt: DateTime

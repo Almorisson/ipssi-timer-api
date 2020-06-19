@@ -1,12 +1,12 @@
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema;
 
 const timerSchema = mongoose.Schema(
 	{
-		tasks: {
-            type: Array,
             loggedTime: {
                 type: Date,
                 required: true,
-                default: Date("00:00:00").now
+                default: Date.now
             },
             title: {
                 type: String,
@@ -14,8 +14,11 @@ const timerSchema = mongoose.Schema(
             },
             description: {
                 type: String
+            },
+            project: {
+                type: ObjectId,
+                ref: 'Project'
             }
-        }
 
 	},
 	{ timestamps: true }

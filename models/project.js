@@ -3,22 +3,36 @@ const { ObjectId } = mongoose.Schema;
 
 const projectSchema = mongoose.Schema(
 	{
-		title: {
+		name: {
 			type: String,
 			required: true
 		},
-        description: {
-            type: String,
-            required: true
-        },
-        team: {
-            type: ObjectId,
-            ref: 'Team'
-        },
-        tasks: {
-            type: Array,
-            ref: 'Timer'
-        }
+		description: {
+			type: String,
+			required: true
+		},
+		assignedTeams: {
+			type: Array,
+			default: [
+                {
+                    type: ObjectId,
+                    ref: 'Team'
+                }
+            ]
+		},
+		tasks: {
+			type: Array,
+			default: [ {
+                task: {
+                    type: ObjectId,
+                    ref: 'Timer'
+                }
+            } ]
+		},
+		createdBy: {
+			type: ObjectId,
+			ref: 'User'
+		}
 	},
 	{ timestamps: true }
 );

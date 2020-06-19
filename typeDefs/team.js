@@ -31,20 +31,23 @@ module.exports = gql`
 
 	# custom input type for updating team infos
 	input UpdateTeamInput {
+		_id: String!
 		name: String
 		description: String
 		users: [UserInput]
-		admin: UserInput! # User will no be able to update this field
 	}
 
-	# mutation type for creating/updating a team
+	# mutation type for creating/updating/deleting a team
 	type Mutation {
-		createTeam(input: CreateTeamInput!): Team!
+		createTeam(input: CreateTeamInput!): Team! # Return a team
 		updateTeam(input: UpdateTeamInput): Team! # Return a team
+		deleteTeam(teamId: String!): Team! # Return a team
 	}
 
 	# query type to retrieve given team(s)
 	type Query {
-		teamsCreatedByAdmin: [Team!]!
+		teamsCreatedByAdmin: [Team!]! # Return a collection of teams belongs to a user(admin of this one)
+		singleTeam(teamId: String!): Team! # Return a team
 	}
 `;
+    

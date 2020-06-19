@@ -30,15 +30,22 @@ module.exports = gql`
 
     # custom input type for updating project infos
     input UpdateProjectInput {
+        _id: String!
         name: String
         description: String
-		#tasks: [Timer!]!
-		#admin: User! # We will no able user to update this field
+		assignedTeams: [UpdateTeamInput!]
+        #tasks: [] Will come later to here
     }
 
     # mutation type for creating/updating a project
     type Mutation {
-        createProject: Project!
-        updateProject(input: UpdateProjectInput): Project! # Return a project
+        createProject(input: CreateProjectInput!): Project! # Return a project
+        updateProject(input: UpdateProjectInput!): Project! # Return a project
+        deleteProject(projectId: String!): Project! # Return a project
     }
+    	# query type to retrieve given team(s)
+	type Query {
+		projectsCreatedByUser: [Project!]! # Return a collection of projects created by a user
+		singleProject(projectId: String!): Project! # Return a project
+	}
 `;

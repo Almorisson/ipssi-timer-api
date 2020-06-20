@@ -3,6 +3,7 @@ const { authCheck } = require('../helpers/auth');
 const User = require('../models/user');
 const shortid = require('shortid');
 const { DateTimeResolver } = require('graphql-scalars');
+const user = require('../models/user');
 /**
  * Allow to get profile infos of a given User
  *  @see authCheck method to better understand how we verified that user is current logged in user
@@ -35,7 +36,17 @@ const publicProfile = async (_, args) => await User.findOne({ username: args.use
  * @param {*} _
  * @param {*} args
  */
-const allUsers = async (_, args) => await User.find({}).exec();
+const allUsers = async (_, args, { req }) => {
+	try {
+		const currentUser = await authCheck(req);
+		if (currentUser) {
+            const filteredUsers = await User.find({ email: { $ne: currentUser.email}}).sort({ createdAt: -1});
+            return filteredUsers;
+		}
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 /**
  * Log in an existing user or create it if not exist
@@ -105,7 +116,7 @@ module.exports = {
 	Query: {
 		profile,
 		publicProfile,
-        allUsers
+		allUsers
 	},
 
 	Mutation: {

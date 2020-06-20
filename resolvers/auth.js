@@ -2,9 +2,10 @@ const { gql } = require('apollo-server-express');
 const { authCheck } = require('../helpers/auth');
 const User = require('../models/user');
 const shortid = require('shortid');
-const {DateTimeResolver} = require('graphql-scalars');
+const { DateTimeResolver } = require('graphql-scalars');
+const user = require('../models/user');
 /**
- * Allow to ge profile infos of a given User
+ * Allow to get profile infos of a given User
  *  @see authCheck method to better understand how we verified that user is current logged in user
  *
  * @param {*} _
@@ -13,14 +14,38 @@ const {DateTimeResolver} = require('graphql-scalars');
  */
 const profile = async (_, args, { req }) => {
 	try {
-        const currentUser = await authCheck(req);
+		const currentUser = await authCheck(req);
 		if (currentUser) {
 			return await User.findOne({ email: currentUser.email }).exec();
+		}
+	} catch (error) {
+		console.log(error);
+	}
+};
 
-        }
-    } catch (error) {
-        console.log(error)
-    }
+/**
+ * Allow to get public profile of a given user
+ *
+ * @param {*} _
+ * @param {*} args
+ * @param {*} param2
+ */
+const publicProfile = async (_, args) => await User.findOne({ username: args.username }).exec();
+/**
+ * Allow to get all users
+ * @param {*} _
+ * @param {*} args
+ */
+const allUsers = async (_, args, { req }) => {
+	try {
+		const currentUser = await authCheck(req);
+		if (currentUser) {
+            const filteredUsers = await User.find({ email: { $ne: currentUser.email}}).sort({ createdAt: -1});
+            return filteredUsers;
+		}
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 /**
@@ -60,7 +85,7 @@ const createUser = async (_, args, { req }) => {
  * @param {*} param2
  */
 const updateUser = async (_, args, { req }) => {
-    /* const currentUser = await authCheck(req);
+	/* const currentUser = await authCheck(req);
     const updatedUser = await User.findOneAndUpdate(
 				{ email: currentUser.email },
 				{ ...args.input },
@@ -87,13 +112,15 @@ const updateUser = async (_, args, { req }) => {
  * Exports all queries and mutations
  */
 module.exports = {
-    DateTime: DateTimeResolver,
+	DateTime: DateTimeResolver,
 	Query: {
-		profile
+		profile,
+		publicProfile,
+		allUsers
 	},
 
 	Mutation: {
 		createUser,
-        updateUser
+		updateUser
 	}
 };

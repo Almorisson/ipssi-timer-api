@@ -42,6 +42,8 @@ module.exports = gql`
     # query type to get get user infos
     type Query {
 		profile: User!  # Return a User
+        publicProfile(username: String!): User! # Return a user,
+        allUsers: [User!] # Return all users
 	}
 
     # mutation type for creating/updating a user

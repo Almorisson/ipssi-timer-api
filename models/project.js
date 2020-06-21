@@ -13,21 +13,11 @@ const projectSchema = mongoose.Schema(
 		},
 		assignedTeams: {
 			type: Array,
-			default: [
-                {
-                    type: ObjectId,
-                    ref: 'Team'
-                }
-            ]
+			default: []
 		},
 		tasks: {
 			type: Array,
-			default: [ {
-                task: {
-                    type: ObjectId,
-                    ref: 'Timer'
-                }
-            } ]
+			default: []
 		},
 		createdBy: {
 			type: ObjectId,

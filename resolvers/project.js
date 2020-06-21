@@ -20,11 +20,11 @@ const createProject = async (_, args, { req }) => {
 		// validation
 		if (args.input.name.trim() === '')
 			return res.json({
-				errorMessage: 'Les champ nom est obligatoire pour créer un nouveau projet!'
+				errorMessage: 'Le champ nom est obligatoire pour créer un nouveau projet!'
 			});
-		const project = await Project.findOne({ name: args.input.name }).exec();
 
 		if (currentUser) {
+			const project = await Project.findOne({ name: args.input.name }).exec();
 			if (project)
 				return res.json({
 					errorMessage: 'Le nom de ce projet existe dèjà, veuillez choisir un autre nom !'

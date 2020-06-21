@@ -4,12 +4,6 @@ module.exports = gql`
 	# scalar type to support correct DateTime formatting
 	scalar DateTime
 
-    type Timer {
-        name: String
-        description: String
-        loggedTime: DateTime!
-        project: Project
-    }
 	# custom type for the project model
 	type Project {
 		_id: ID!
@@ -28,13 +22,20 @@ module.exports = gql`
 		description: String
 	}
 
+    # custom input type for Timer
+    input TimerInput {
+        title: String!
+        description: String
+        loggedTime: DateTime
+    }
+
     # custom input type for updating project infos
     input UpdateProjectInput {
         _id: String!
         name: String
         description: String
 		assignedTeams: [UpdateTeamInput!]
-        #tasks: [] Will come later to here
+        tasks: [TimerInput!] #Will come later to here
     }
 
     # mutation type for creating/updating a project

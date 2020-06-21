@@ -4,9 +4,9 @@ const { ObjectId } = mongoose.Schema;
 const timerSchema = mongoose.Schema(
 	{
             loggedTime: {
-                type: Date,
+                type: Number,
                 required: true,
-                default: Date.now
+                default: 0
             },
             title: {
                 type: String,

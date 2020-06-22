@@ -23,7 +23,8 @@ module.exports = gql`
 
 	# custom input type for Timer
 	input UpdateTimerInput {
-		title: String!
+        _id: String!
+		title: String
 		description: String
 	}
 

@@ -37,7 +37,7 @@ const createTimer = async (_, args, { req }) => {
 				project: project._id
 			})
 				.save()
-				.then((timer) => timer.execPopulate('project', '_id name description'));
+				.then((timer) => timer.execPopulate('project', '_id name description createdBy'));
 
 			return newTimer;
 		}
@@ -77,7 +77,7 @@ const allTimersPerProject = async (_, args, { req }) => {
 const updateTimer = async (_, args, { req }) => {
     const currentUser = await authCheck(req);
 	// validation
-	if (args.input.name.trim() === '' && args.input.description.trim() === '')
+	if (args.input.title.trim() === '' && args.input.description.trim() === '')
 		return res.json({
 			errorMessage: 'Vous devez renseigner au moins un des champs pour mettre à jour cette la tâche'
 		});

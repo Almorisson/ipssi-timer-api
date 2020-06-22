@@ -8,7 +8,7 @@ module.exports = gql`
 	type Team {
 		_id: ID!
 		name: String!
-		description: String
+		description: String!
 		users: [User!]! # Need to rely it with user typeDef later
 		admin: User!
 		createdAt: DateTime
@@ -17,6 +17,7 @@ module.exports = gql`
 
 	# custom input type of type user
 	input UserInput {
+        _id: String!
 		email: String
 		username: String
 		name: String
@@ -50,4 +51,3 @@ module.exports = gql`
 		singleTeam(teamId: String!): Team! # Return a team
 	}
 `;
-    

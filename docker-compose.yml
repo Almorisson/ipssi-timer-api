@@ -1,7 +1,7 @@
-version: "3"
+version: "3.3"
 services:
   api:
-    container_name: api
+    container_name: ipssi_timer_api_node # Note: Always give unique name to containers to avoid conflict naming
     restart: always
     build: ./
     ports:
@@ -14,9 +14,9 @@ services:
     depends_on:
       - mongo
   mongo:
-    container_name: mongo
-    restart: always
-    image: mongo:4.0
+    container_name: ippsi_timer_api_mongo # Note: Always give unique name to containers to avoid conflict naming
+    #restart: always
+    image: mongo
     volumes:
       - mongo-storage:/data/db # We add a volume to our container in order to store the database data
     expose:
@@ -24,7 +24,7 @@ services:
     ports:
       - 27017:27017
 
-# Volumes definition:
+# Volumes definition with connectivity
 volumes:
   mongo-storage:
     driver: local

@@ -27,9 +27,10 @@ const createTeam = async (_, args, { req }) => {
 			const userFromDb = await User.findOne({ email: currentUser.email }).exec();
 			// create a new team
 			let newTeam = new Team({
-				...args.input,
+                name: args.input.name,
+                description: args.input.description,
+				users: [ userFromDb, ...args.input.users ],
 				admin: userFromDb._id,
-				users: [ userFromDb ]
 			})
 				.save()
 				.then((team) => team.execPopulate('admin', '_id username name'));

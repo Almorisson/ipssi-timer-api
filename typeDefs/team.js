@@ -15,19 +15,19 @@ module.exports = gql`
 		updatedAt: DateTime
 	}
 
-	# custom input type of type user
+	# custom input type for user model
 	input UserInput {
-        _id: String!
+    _id: String
 		email: String
 		username: String
 		name: String
-		bio: String
 	}
 
 	# custom type to get team data
 	input CreateTeamInput {
 		name: String!
 		description: String
+        users: [UserInput]
 	}
 
 	# custom input type for updating team infos
